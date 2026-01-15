@@ -1,0 +1,111 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, sans-serif;
+}
+
+.dashboard {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top bar */
+.topbar {
+  height: 100px;
+  background: #111827;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  flex-shrink: 0;
+}
+
+/* Main layout */
+.main {
+  display: flex;
+  height: calc(100vh - 60px);
+  min-height: 0; 
+}
+
+/* Sidebar */
+.sidebar {
+  width: 200px;
+  background: #222529;
+  color: #cbd5e1;
+  padding: 20px 10px;
+}
+
+.nav-item {
+  padding: 12px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  background: #374151;
+}
+
+.nav-item.active {
+  background: #2563eb;
+  color: white;
+}
+
+
+.content {
+  flex: 1;
+  display: flex;
+}
+
+.screen {
+  flex: 1;
+  background: #151516;
+  padding: 30px;
+  overflow: auto;
+}
+
+/* Cards layout */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* Individual card */
+.card {
+  background: rgb(59, 76, 238);
+  height: 150px;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+}
+
+.profile-top {
+  width: 100%;
+  background: rgb(82, 71, 236);
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.profile-top h2 {
+  margin-bottom: 6px;
+}
+
+.profile-top p {
+  color: #555;
+}
+
+.time {
+  text-align: right;
+  font-weight: 500;
+}
