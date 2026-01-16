@@ -40,6 +40,7 @@ function Dashboard() {
           <div className="nav-item">Graphs</div>
           <div className="nav-item">Tasks</div>
           <div className="nav-item">Self Reflection</div>
+          <div className="nav-item">Help</div>
         </aside>
 
         {/* FULL SCREEN CONTENT */}
@@ -48,25 +49,45 @@ function Dashboard() {
 
             <div className="profile-top">
               <div>
-                <h2>Reba</h2>
+                <h1>Reba</h1>
+                <h2>Goals</h2>
+                <p>Add goals here, it can be few and then you can click more to view more</p>
+                <p>Currenly focusing on Reaact</p>
+                <p>Currenly focusing on Reaact</p>
+                <p>Currenly focusing on Reaact</p>
+                <p>Currenly focusing on Reaact</p>
+                <p>Currenly focusing on Reaact</p>
+                <p>Currenly focusing on Reaact</p>
+                <p>Currenly focusing on Reaact</p>
+                <p>Currenly focusing on Reaact</p>
                 <p>Currenly focusing on Reaact</p>
               </div>
 
               <div className="time">
-                {time.toLocaleDateString} <br />
-                {time.toLocaleTimeString}
+                {time.toLocaleDateString()} <br />
+                {time.toLocaleTimeString()}
               </div>
             </div>
 
-            {/*
+            <div className="task-cards">
 
-            <div className="cards">
+              <div className="task-card overdue">
+                <h3>Overdue</h3>
+                <ul>
+                  <li>Task 1</li>
+                  <li>Task 2</li>
+                </ul>
+              </div>
+
+              {/*
               <div className="card">Details</div>
               <div className="card">Details</div>
-              <div className="card">Details</div>
-              <div className="card">Details</div>
+              */}
+
+              
+              
             </div>
-*/}
+
           </div>
         </section>
 
