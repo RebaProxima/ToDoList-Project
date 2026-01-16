@@ -112,6 +112,7 @@
   background: rgb(82, 71, 236);
    padding: 40px 24px;
   min-height: 120px;
+  max-height: 700px;
   display: flex;
   justify-content: space-between;
   align-items: center;

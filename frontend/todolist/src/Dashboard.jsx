@@ -79,13 +79,22 @@ function Dashboard() {
                 </ul>
               </div>
 
-              {/*
-              <div className="card">Details</div>
-              <div className="card">Details</div>
-              */}
+              <div className="task-card today">
+                <h3>Today</h3>
+                <ul>
+                  <li>Task 3</li>
+                  <li>Task 4</li>
+                </ul>
+              </div>
 
-              
-              
+              <div className="task-card">
+                <h3>Tomorrow</h3>
+                <ul>
+                  <li>Task 5</li>
+                  <li>Task 6</li>
+                </ul>
+              </div>
+
             </div>
 
           </div>
