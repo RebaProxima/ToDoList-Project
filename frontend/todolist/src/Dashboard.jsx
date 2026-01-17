@@ -1,5 +1,10 @@
 import React, {useState, useEffect } from "react";
 import "./Dashboard.css";
+import Profile from "./Componets/Profile.jsx";
+import Graphs from "./Componets/Graphs.jsx";
+import Tasks from "./Componets/Tasks.jsx";
+import SelfReflection from "./Componets/SelfRefelection.jsx";
+import Help from "./Componets/Help.jsx";
 
 function Dashboard() {
 
