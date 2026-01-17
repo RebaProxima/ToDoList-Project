@@ -1,6 +1,5 @@
 import React, {useState, useEffect } from "react";
 import "./Dashboard.css";
-import Profile from "./Componets/Profile.jsx";
 import Graphs from "./Componets/Graphs.jsx";
 import Tasks from "./Componets/Tasks.jsx";
 import SelfReflection from "./Componets/SelfRefelection.jsx";
@@ -8,15 +7,14 @@ import Help from "./Componets/Help.jsx";
 
 function Dashboard() {
 
-    const [profile, setProfile] = useState(null);
-    const [activePage, setActivePage] = useState("Overview");
+    const [activeSection, setActiveSection] = useState("dashboard");
     const [time, setTime] = useState(new Date());
 
     useEffect( () => {
         fetch("http://localhost:5000/")
         .then(res => res.text())
         .then(data => console.log("FROM SERVER:", data))
-        .catch(err => console.err(err))
+        .catch(err => console.error(err))
     }, [] );
 
     useEffect(() => {
@@ -42,47 +40,51 @@ function Dashboard() {
         {/* Sidebar */}
         <aside className="sidebar">
           <div 
-            className={`nav-item ${activePage === "profile" ? "active" : ""}`}
-            onClick={() => setActivePage("profile")}
+            className={`nav-item ${activeSection === "dashboard" ? "active" : ""}`}
+            onClick={() => setActiveSection("dashboard")}
           >
-            Profile
+            Dashboard
           </div>
 
           <div 
-            className={`nav-item ${activePage === "graphs" ? "active" : ""}`}
-            onClick={() => setActivePage("graphs")}
+            className={`nav-item ${activeSection === "graphs" ? "active" : ""}`}
+            onClick={() => setActiveSection("graphs")}
           >
             Graphs
           </div>
 
           <div
-           className={`nav-item ${activePage === "tasks" ? "active" : ""}`}
-           onClick={() => setActivePage("tasks")}
+           className={`nav-item ${activeSection === "tasks" ? "active" : ""}`}
+           onClick={() => setActiveSection("tasks")}
           >
             Tasks
             </div>
 
           <div 
-            className={`nav-item ${activePage === "selfReflection" ? "active" : ""}`}
-            onClick={() => setActivePage("selfReflection")}
+            className={`nav-item ${activeSection === "selfReflection" ? "active" : ""}`}
+            onClick={() => setActiveSection("selfReflection")}
           >
             Self Reflection
           </div>
 
           <div 
-          className={`nav-item ${activePage === "help" ? "active" : ""}`}
-          onClick={() => setActivePage("help")}
+          className={`nav-item ${activeSection === "help" ? "active" : ""}`}
+          onClick={() => setActiveSection("help")}
           >
             Help
           </div>
 
         </aside>
 
+        
+
         {/* FULL SCREEN CONTENT */}
         <section className="content">
           <div className="screen">
 
-            <div className="profile-top">
+            {activeSection === "dashboard" && (
+              <>
+                              <div className="profile-top">
               <div>
                 <h1>Reba</h1>
                 <h2>Goals</h2>
@@ -130,7 +132,13 @@ function Dashboard() {
                 </ul>
               </div>
 
-            </div>
+             </div>
+            </>
+            ) }
+            {activeSection === "graphs" && <Graphs />}
+            {activeSection === "tasks" && <Tasks />}
+            {activeSection === "selfReflection" && <SelfReflection />}
+            {activeSection === "help" && <Help />}
 
           </div>
         </section>
