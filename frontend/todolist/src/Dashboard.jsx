@@ -36,11 +36,41 @@ function Dashboard() {
 
         {/* Sidebar */}
         <aside className="sidebar">
-          <div className="nav-item active">Profile</div>
-          <div className="nav-item">Graphs</div>
-          <div className="nav-item">Tasks</div>
-          <div className="nav-item">Self Reflection</div>
-          <div className="nav-item">Help</div>
+          <div 
+            className={`nav-item ${activePage === "profile" ? "active" : ""}`}
+            onClick={() => setActivePage("profile")}
+          >
+            Profile
+          </div>
+
+          <div 
+            className={`nav-item ${activePage === "graphs" ? "active" : ""}`}
+            onClick={() => setActivePage("graphs")}
+          >
+            Graphs
+          </div>
+
+          <div
+           className={`nav-item ${activePage === "tasks" ? "active" : ""}`}
+           onClick={() => setActivePage("tasks")}
+          >
+            Tasks
+            </div>
+
+          <div 
+            className={`nav-item ${activePage === "selfReflection" ? "active" : ""}`}
+            onClick={() => setActivePage("selfReflection")}
+          >
+            Self Reflection
+          </div>
+
+          <div 
+          className={`nav-item ${activePage === "help" ? "active" : ""}`}
+          onClick={() => setActivePage("help")}
+          >
+            Help
+          </div>
+
         </aside>
 
         {/* FULL SCREEN CONTENT */}
