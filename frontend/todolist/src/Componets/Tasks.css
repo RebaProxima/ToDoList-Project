@@ -2,3 +2,11 @@
     padding: 20px;
 }
 
+.Cards{
+    border-radius: 12px;
+    border: 1px solid #dbdbdb;
+    width: 250px;
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    background-color: aqua;
+}

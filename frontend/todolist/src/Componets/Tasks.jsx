@@ -1,4 +1,5 @@
 import React, {useState, useEffect}  from "react";
+import "./Tasks.css"
 
 function Tasks(){
 
@@ -12,10 +13,26 @@ function Tasks(){
     return(
         <div className="taskBoard">
 
-            <h2>Tasks</h2>
+            <h2>Tasks Menu</h2>
             <button onClick={() => setTaskMode("Choose")}>
                 Add Task
-            </button>           
+            </button>
+
+            <div className="Cards">
+               <h3>Name of the Task</h3>
+               <p> Time for the Task</p>
+               <p>Starting: at the certain time </p>
+               <p>Completed: Certain time </p>
+               <p> Task Description </p>
+            </div>  
+
+            <div className="Cards">
+               <h3>Name of the Task</h3>
+               <p> Time for the Task</p>
+               <p>Starting: at the certain time </p>
+               <p>Completed: Certain time </p>
+               <p> Task Description </p>
+            </div>          
     
         </div>
     )

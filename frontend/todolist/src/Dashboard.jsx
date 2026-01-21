@@ -68,7 +68,7 @@ function Dashboard() {
 
             {activeSection === "dashboard" && (
               <>
-                              <div className="profile-top">
+              <div className="profile-top">
               <div>
                 <h1>Reba</h1>
                 <h2>Goals</h2>
