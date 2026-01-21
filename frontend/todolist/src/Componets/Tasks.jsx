@@ -1,26 +1,22 @@
 import React, {useState, useEffect}  from "react";
-import Calender from "react-calendar"
-import "react-calendar/dist/Calendar.css"
 
 function Tasks(){
 
-    const handleClick = () =>  {
-        alert("Task is added");
-    }
-
-    const [date, setDate] = useState(new Date())
+    const [taskMode, setTaskMode] = useState("idle");
+    const [tasks, setTasks] = useState([])
+    const [title, setTitle] = useState("")
+    const [category, setCategory] = useState("")
+    const [start, setStart] = useState("")
+    const [end, setEnd] = useState("")
 
     return(
         <div className="taskBoard">
 
-            <button onClick={handleClick}>
+            <h2>Tasks</h2>
+            <button onClick={() => setTaskMode("Choose")}>
                 Add Task
-            </button>
-
-            <Calender onChange={setDate}
-                      value={date}
-            />
-
+            </button>           
+    
         </div>
     )
 }

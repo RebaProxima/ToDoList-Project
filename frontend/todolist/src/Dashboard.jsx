@@ -1,9 +1,7 @@
 import React, {useState, useEffect } from "react";
 import "./Dashboard.css";
-import Graphs from "./Componets/Graphs.jsx";
 import Tasks from "./Componets/Tasks.jsx";
 import SelfReflection from "./Componets/SelfRefelection.jsx";
-import Help from "./Componets/Help.jsx";
 
 function Dashboard() {
 
@@ -46,13 +44,6 @@ function Dashboard() {
             Dashboard
           </div>
 
-          <div 
-            className={`nav-item ${activeSection === "graphs" ? "active" : ""}`}
-            onClick={() => setActiveSection("graphs")}
-          >
-            Graphs
-          </div>
-
           <div
            className={`nav-item ${activeSection === "tasks" ? "active" : ""}`}
            onClick={() => setActiveSection("tasks")}
@@ -65,13 +56,6 @@ function Dashboard() {
             onClick={() => setActiveSection("selfReflection")}
           >
             Self Reflection
-          </div>
-
-          <div 
-          className={`nav-item ${activeSection === "help" ? "active" : ""}`}
-          onClick={() => setActiveSection("help")}
-          >
-            Help
           </div>
 
         </aside>
