@@ -1,7 +1,7 @@
 import React, {useState, useEffect } from "react";
 import "./Dashboard.css";
 import Tasks from "./Componets/Tasks.jsx";
-import SelfReflection from "./Componets/SelfRefelection.jsx";
+import SelfReflection from "./Componets/SelfReflection.jsx";
 
 function Dashboard() {
 
