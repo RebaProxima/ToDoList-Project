@@ -10,11 +10,21 @@ function Tasks(){
     const [start, setStart] = useState("")
     const [end, setEnd] = useState("")
 
+    const addTask = async() => {
+        await fetch("http://localhost:5000/tasks", {
+            method: "POST",
+            headers: {
+                "Content-Type": "aplication/json"
+            },
+            body: JSON.stringify({ title: "My first real task"})
+        })
+    }
+
     return(
         <div className="taskBoard">
 
             <h2>Tasks Menu</h2>
-            <button onClick={() => setTaskMode("Choose")}>
+            <button onClick={addTask}>
                 Add Task
             </button>
 
