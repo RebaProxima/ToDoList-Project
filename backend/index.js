@@ -1,15 +1,6 @@
 const express = require('express')
 const cors = require('cors')
-const { Pool } = require("pg")
 const app =  express()
-
-const pool = new Pool({
-    user: "postgres",
-    host: "localhost",
-    database: "todoapp",
-    password: "Complicated",
-    port: 5432,
-})
 
 app.use( cors ({
     origin:"http://localhost:5173"
@@ -27,12 +18,14 @@ app.post("/tasks", async (req, res) => {
 
     console.log("Task received:", title)
 
-    const result = await pool.query(
-        "INSERT INTO tasks (title) VALUES ($1) RETURNING *",
-        [title]
-    )
-
-    res.json(result.rows[0])
+    db.run(
+    "INSERT INTO tasks (title) VALUES (?)",
+    [title],
+    function (err) {
+      if (err) return res.status(500).json(err)
+      res.json({ id: this.lastID, title })
+    }
+  )
 })
 
 app.listen(5000,() => {
