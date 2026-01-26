@@ -7,8 +7,7 @@ db.serialize(() => {
         
         CREATE TABLE IF NOT EXISTS task(
            id INTEGER PRODUCT KEY AUTOINCREMENT,
-           title TEXT,
-           completed INTEGER
+           title TEXT
         )
     `)
 

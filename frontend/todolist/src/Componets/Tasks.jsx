@@ -3,18 +3,13 @@ import "./Tasks.css"
 
 function Tasks(){
 
-    const [taskMode, setTaskMode] = useState("idle");
-    const [tasks, setTasks] = useState([])
-    const [title, setTitle] = useState("")
-    const [category, setCategory] = useState("")
-    const [start, setStart] = useState("")
-    const [end, setEnd] = useState("")
+    
 
-    const addTask = async() => {
+    const addTask = async () => {
         await fetch("http://localhost:5000/tasks", {
             method: "POST",
             headers: {
-                "Content-Type": "aplication/json"
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({ title: "My first real task"})
         })
