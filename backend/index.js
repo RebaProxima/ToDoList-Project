@@ -1,6 +1,8 @@
 const express = require('express')
 const cors = require('cors')
+
 const app =  express()
+const port = 5000
 
 app.use( cors ({
     origin:"http://localhost:5173"
@@ -15,17 +17,14 @@ app.get("/", (req, res) => {
 
 app.post("/tasks", async (req, res) => {
     const { title } = req.body;
+    console.log("The task title is ", title);
 
-    console.log("Task received:", title)
-
-    db.run(
-    "INSERT INTO tasks (title) VALUES (?)",
-    [title],
-    function (err) {
-      if (err) return res.status(500).json(err)
-      res.json({ id: this.lastID, title })
+    const serverResponse = {
+        message: `The server has proceeded with the response`,
+        status: `success`
     }
-  )
+
+    res.json(serverResponse)
 })
 
 app.listen(5000,() => {

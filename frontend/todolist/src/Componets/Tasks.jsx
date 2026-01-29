@@ -3,8 +3,6 @@ import "./Tasks.css"
 
 function Tasks(){
 
-    
-
     const addTask = async () => {
         await fetch("http://localhost:5000/tasks", {
             method: "POST",

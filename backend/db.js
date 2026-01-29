@@ -1,16 +1,11 @@
-const sqlite3 = require('sqlite3').verbose()
+const mysql = require('mysql/promise')
+const { Database } = require('sqlite3')
 
-const db = new sqlite3.Database('./todo.db')
-
-db.serialize(() => {
-    db.run(`
-        
-        CREATE TABLE IF NOT EXISTS task(
-           id INTEGER PRODUCT KEY AUTOINCREMENT,
-           title TEXT
-        )
-    `)
-
+const pool = mysql.createPool ({
+    host: 'localhost',
+    user: 'Proxima',
+    password: '#Proxima@1',
+    database: 'todolist'
 })
 
-module.exports = db
+module.exports = pool;
