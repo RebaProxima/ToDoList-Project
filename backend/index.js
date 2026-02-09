@@ -1,6 +1,6 @@
 const express = require('express')
 const cors = require('cors')
-
+const database = require('./db')
 const app =  express()
 const port = 5000
 
@@ -10,13 +10,22 @@ app.use( cors ({
 
 app.use(express.json())
 
-app.get("/", (req, res) => {
-
-    res.send("Server is running");
+pool.connect( err => {
+    if(err){
+        console.log("There is a connection error ")
+        return;
+    }
+    console.log("Connected to the sql database")
 })
 
-app.post("/tasks", async (req, res) => {
+app.post("/tasks", (req, res) => {
+
     const { title } = req.body;
+
+    if(!task){
+        return res.status(400).send("Task title is required")
+    }
+
     console.log("The task title is ", title);
 
     const serverResponse = {
