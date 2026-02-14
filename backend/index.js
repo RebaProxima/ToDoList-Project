@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const database = require('./db')
+const pool = require('./db')
 const app =  express()
 const port = 5000
 
@@ -10,13 +11,15 @@ app.use( cors ({
 
 app.use(express.json())
 
-pool.connect( err => {
-    if(err){
-        console.log("There is a connection error ")
-        return;
-    }
-    console.log("Connected to the sql database")
-})
+
+pool.query(`
+  CREATE TABLE IF NOT EXISTS items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+`)
+    
 
 app.post("/tasks", (req, res) => {
 
