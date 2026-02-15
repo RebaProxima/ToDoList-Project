@@ -10,6 +10,7 @@ app.use( cors ({
 }))
 
 app.use(express.json())
+app.use(cors())
 
 
 pool.query(`
@@ -20,12 +21,15 @@ pool.query(`
     )
 `)
     
+app.get("/" , (req, res) =>{
+  res.send("APP has connected")
+})
 
 app.post("/tasks", (req, res) => {
 
     const { title } = req.body;
 
-    if(!task){
+    if(!title){
         return res.status(400).send("Task title is required")
     }
 
