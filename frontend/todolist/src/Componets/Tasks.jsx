@@ -3,15 +3,34 @@ import "./Tasks.css"
 
 function Tasks(){
 
+    const [tasks, setTasks] = useState([])
+    const [newTask, setNewTask] = useState("")
+
+    const fetchTasks = async () => {
+        const res = await fetch("http://localhost:5000/tasks")
+        const data = await res.json()
+        setTasks(data)
+    }
+
     const addTask = async () => {
+
+        if(!newTask) return
+
         await fetch("http://localhost:5000/tasks", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ title: "My first real task"})
+            body: JSON.stringify({ title: newTask})
         })
+
+        setNewTask("")
+        fetchTasks();
     }
+
+    useEffect(() => {
+        fetchTasks()
+    }, [])
 
     return(
         <div className="taskBoard">
@@ -20,6 +39,14 @@ function Tasks(){
             <button onClick={addTask}>
                 Add Task
             </button>
+            
+            <div className="Cards">
+               <input 
+                 value={newTask}
+                 onChange={e => setNewTask(e.target.value)}
+                 placeholder="Enter task"
+               />
+            </div> 
 
             <div className="Cards">
                <h3>Name of the Task</h3>

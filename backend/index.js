@@ -14,10 +14,10 @@ app.use(cors())
 
 
 pool.query(`
-  CREATE TABLE IF NOT EXISTS items (
+  CREATE TABLE IF NOT EXISTS tasks (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    title VARCHAR(255) NOT NULL,
+    
     )
 `)
     
@@ -33,14 +33,33 @@ app.post("/tasks", (req, res) => {
         return res.status(400).send("Task title is required")
     }
 
-    console.log("The task title is ", title);
+    const sql = "INSERT INTO tasks (title) VALUES (?)"
 
-    const serverResponse = {
-        message: `The server has proceeded with the response`,
-        status: `success`
-    }
+    pool.query(sql, [title], (err, results)  =>{
+        if(err){
+            console.error(err);
+            return res.status(500).send("Ther exist a database error where we are adding a taske")
+        }
+        
+    })
 
-    res.json(serverResponse)
+    res.json({
+        id: result.insertId,
+        title
+    })
+})
+
+app.get("/tasks" , (req, res) => {
+    
+    const getQuery = "SELECT * FROM tasks"
+
+    pool.query( getQuery, (err, resuls)  => {
+        if(err){
+            console.error("A getQuery error: ", err)
+            return res.status(500).send("There exist a dastabase error where ewe are retriuving a task")
+        }
+        res.json(results)
+    })
 })
 
 app.listen(5000,() => {
