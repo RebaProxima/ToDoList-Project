@@ -17,9 +17,15 @@ pool.query(`
   CREATE TABLE IF NOT EXISTS tasks (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
-    
+    completed BOOLEAN DEFAULT FALSE
     )
-`)
+`, (err) => {
+    if(err) {
+        console.log("Table creation error: ", err)
+    } else {
+        console.log("Table exists already")
+    }
+})
     
 app.get("/" , (req, res) =>{
   res.send("APP has connected")
@@ -35,30 +41,33 @@ app.post("/tasks", (req, res) => {
 
     const sql = "INSERT INTO tasks (title) VALUES (?)"
 
-    pool.query(sql, [title], (err, results)  =>{
+    pool.query(sql, [title], (err, result)  =>{
         if(err){
             console.error(err);
             return res.status(500).send("Ther exist a database error where we are adding a taske")
         }
+
+        res.json({
+        id: result.insertId,
+        title,
+        completed: false
+      })
         
     })
 
-    res.json({
-        id: result.insertId,
-        title
-    })
+    
 })
 
 app.get("/tasks" , (req, res) => {
     
     const getQuery = "SELECT * FROM tasks"
 
-    pool.query( getQuery, (err, resuls)  => {
+    pool.query( getQuery, (err, result)  => {
         if(err){
             console.error("A getQuery error: ", err)
             return res.status(500).send("There exist a dastabase error where ewe are retriuving a task")
         }
-        res.json(results)
+        res.json(result)
     })
 })
 
