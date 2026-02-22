@@ -17,6 +17,9 @@ pool.query(`
   CREATE TABLE IF NOT EXISTS tasks (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
+    start_time DATETIME,
+    end_time DATETIME,
+    description TEXT,
     completed BOOLEAN DEFAULT FALSE
     )
 `, (err) => {
@@ -39,17 +42,20 @@ app.post("/tasks", (req, res) => {
         return res.status(400).send("Task title is required")
     }
 
-    const sql = "INSERT INTO tasks (title) VALUES (?)"
+    const sql = "INSERT INTO tasks (title, start_time, end_time, description) VALUES (?, ?, ?, ?)"
 
-    pool.query(sql, [title], (err, result)  =>{
+    pool.query(sql, [title, start_time, end_time, description], (err, result)  =>{
         if(err){
             console.error(err);
-            return res.status(500).send("Ther exist a database error where we are adding a taske")
+            return res.status(500).send("There exist a database error where we are adding a taske")
         }
 
         res.json({
         id: result.insertId,
         title,
+        start_time,
+        end_time,
+        description,
         completed: false
       })
         
