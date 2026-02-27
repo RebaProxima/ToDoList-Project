@@ -71,7 +71,7 @@ app.get("/tasks" , (req, res) => {
     pool.query( getQuery, (err, result)  => {
         if(err){
             console.error("A getQuery error: ", err)
-            return res.status(500).send("There exist a dastabase error where ewe are retriuving a task")
+            return res.status(500).send("There exist a database error where ewe are retriuving a task")
         }
         res.json(result)
     })

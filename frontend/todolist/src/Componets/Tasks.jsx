@@ -4,7 +4,13 @@ import "./Tasks.css"
 function Tasks(){
 
     const [tasks, setTasks] = useState([])
+    const [showForm, setShowForm] = useState(false)
     const [newTask, setNewTask] = useState("")
+
+    const [title, setTitle] = useState("")
+    const [description, setDescription] = useState("")
+    const [startTime, setStrtTime] = useState("")
+    const [endTime, setEndTime] = useState("")
 
     const fetchTasks = async () => {
         const res = await fetch("http://localhost:5000/tasks")
@@ -12,19 +18,22 @@ function Tasks(){
         setTasks(data)
     }
 
-    const addTask = async () => {
-
-        if(!newTask) return
+    const submitTask = async () => {
 
         await fetch("http://localhost:5000/tasks", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ title: newTask})
+            body: JSON.stringify({ 
+                title,
+                description,
+                start_time: startTime,
+                end_time: endTime
+            })
         })
 
-        setNewTask("")
+        setShowForm(false);
         fetchTasks();
     }
 
@@ -36,17 +45,41 @@ function Tasks(){
         <div className="taskBoard">
 
             <h2>Tasks Menu</h2>
-            <button onClick={addTask}>
+            <button onClick={() => setShowForm(true)}>
                 Add Task
             </button>
             
-            <div className="Cards">
-               <input 
-                 value={newTask}
-                 onChange={e => setNewTask(e.target.value)}
-                 placeholder="Enter task"
-               />
-            </div> 
+            {showForm && (
+                <div className="Cards">
+
+                <input 
+                 placeholder="Task Title"
+                 value={title}
+                 onChange={e => setTitle(e.target.value)}
+                />
+
+                <textarea 
+                 placeholder="Description"
+                 onChange={e => setDescription(e.target.value)}
+                />
+
+                <input 
+                 type="datetime-local"
+                 onChange={e => setStrtTime(e.target.value)}
+                />
+
+                <input 
+                 type="datetime-local"
+                 onChange={e => setEndTime(e.target.value)}
+                />
+
+                <button onClick={submitTask} 
+                 saveTask
+                />
+
+                </div>
+
+            )}
 
             <div className="Cards">
                <h3>Name of the Task</h3>
