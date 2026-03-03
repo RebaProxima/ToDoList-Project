@@ -36,26 +36,32 @@ app.get("/" , (req, res) =>{
 
 app.post("/tasks", (req, res) => {
 
-    const { title } = req.body;
+    const { 
+        title,
+        description,
+        start_time,
+        end_time,
+     } = req.body;
 
     if(!title){
         return res.status(400).send("Task title is required")
     }
 
-    const sql = "INSERT INTO tasks (title, start_time, end_time, description) VALUES (?, ?, ?, ?)"
+    const sql = "INSERT INTO tasks (title, description, start_time, end_time) VALUES (?, ?, ?, ?)"
 
-    pool.query(sql, [title, start_time, end_time, description], (err, result)  =>{
+    pool.query(sql, [title, description, start_time, end_time], (err, result)  =>{
         if(err){
-            console.error(err);
+            console.error("DB ERROR", err);
             return res.status(500).send("There exist a database error where we are adding a taske")
         }
 
         res.json({
         id: result.insertId,
         title,
+        description,
         start_time,
         end_time,
-        description,
+        
         completed: false
       })
         
@@ -66,7 +72,10 @@ app.post("/tasks", (req, res) => {
 
 app.get("/tasks" , (req, res) => {
     
-    const getQuery = "SELECT * FROM tasks"
+    const getQuery = `
+      SELECT * FROM tasks
+      ORDER BY id DESC
+    `
 
     pool.query( getQuery, (err, result)  => {
         if(err){

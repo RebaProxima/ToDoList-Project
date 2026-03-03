@@ -28,8 +28,8 @@ function Tasks(){
             body: JSON.stringify({ 
                 title,
                 description,
-                start_time: startTime,
-                end_time: endTime
+                startTime,
+                endTime
             })
         })
 
@@ -73,13 +73,49 @@ function Tasks(){
                  onChange={e => setEndTime(e.target.value)}
                 />
 
-                <button onClick={submitTask} 
-                 saveTask
-                />
+                <button onClick={submitTask}>
+                    saveTask
+                </button> 
+                 
 
                 </div>
-
             )}
+
+            {tasks.map( task => {
+                <div className="Cards" key={task.id}>
+
+                    <h3>{task.title}</h3>
+
+                    <p>
+                        Task Description:
+                        {task.description || "No description for the task"}
+                    </p>
+
+                    <p>
+                        Starting:
+                        {task.start_time
+                        ? new Date(task.start_time).toLocaleString()
+                        : "Not set"}
+                    </p>
+
+                    <p>
+                        Ending:
+                        {task.end_time
+                        ? new Date(task.end_time).toLocaleString()
+                        : "Not set"}
+                    </p>
+
+                    <p>
+                        Completed:
+                        {task.completed ? "✅" : "❌"}
+                    </p>
+
+                    
+                
+                </div>
+            })
+
+            }
 
             <div className="Cards">
                <h3>Name of the Task</h3>
