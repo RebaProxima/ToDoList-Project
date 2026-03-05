@@ -86,6 +86,22 @@ app.get("/tasks" , (req, res) => {
     })
 })
 
+app.get("/tasks/recents" , (req, res) => {
+    
+    const getQuery = `
+      SELECT * FROM tasks
+      ORDER BY id DESC
+      LIMIT 5
+    `
+
+    pool.query( getQuery, (err, results)  => {
+        if(err){
+            return res.status(500).send("There exist a database error where ewe are retriuving a task")
+        }
+        res.json(results)
+    })
+})
+
 app.listen(5000,() => {
     console.log("Server is listening to the port");
 })

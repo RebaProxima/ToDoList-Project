@@ -7,6 +7,7 @@ function Dashboard() {
 
     const [activeSection, setActiveSection] = useState("dashboard");
     const [time, setTime] = useState(new Date());
+    const [tasks, setTasks] = useState([]);
 
     useEffect( () => {
         fetch("http://localhost:5000/")
@@ -22,6 +23,49 @@ function Dashboard() {
 
       return () => clearInterval(interval);
     }, []);
+
+
+    const fetchTasks = async () => {
+      const res = await fetch("http://localhost:5000/tasks")
+      const data = await res.json();
+      setTasks(data);
+    }
+
+    useEffect(() => {
+      fetchTasks()
+    }, [])
+
+    const today = new Date()
+
+    const overdueTasks = tasks.filter(task => {
+      
+
+      return new Date(task.start_time) < today
+    })
+
+    const todayTasks = tasks.filter(task => {
+      if(!task.start_time){
+        return false
+      }
+
+      const taskDate = new Date(task.start_time)
+
+      return taskDate.toDateString() === today.toDateString()
+
+    })
+
+    const tomorrowTasks = tasks.filter(task => {
+      if(!task.start_time){
+        return false
+      }
+
+      const taskDate = new Date(task.start_time)
+
+      const tomorrow = new Date()
+      tomorrow.setDate(today.getDate() + 1)
+
+      return taskDate.toDateString() === tomorrow.toDateString()
+    })
 
     return (
       <div className="dashboard">
@@ -90,21 +134,37 @@ function Dashboard() {
               </div>
             </div>
 
+
+
+            <button onClick={fetchTasks}>
+              Most Recent Tasks Added
+            </button>
+
+
             <div className="task-cards">
 
               <div className="task-card overdue">
                 <h3>Overdue</h3>
                 <ul>
-                  <li>Task 1</li>
-                  <li>Task 2</li>
+                  {overdueTasks.slice(0,3).map(task => (
+                    <li key={task.id}>
+                      {task.title}
+                    </li>
+                  ))}
                 </ul>
               </div>
 
               <div className="task-card today">
                 <h3>Today</h3>
                 <ul>
+                  {todayTasks.slice(0,3).map(task => (
+                    <li key={task.id}>
+                      {task.title}
+                    </li>
+
+                  ))}
                   <li>Task 3</li>
-                  <li>Task 4</li>
+                  
                 </ul>
               </div>
 

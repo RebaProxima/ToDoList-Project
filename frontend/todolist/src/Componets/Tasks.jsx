@@ -16,6 +16,8 @@ function Tasks(){
         const res = await fetch("http://localhost:5000/tasks")
         const data = await res.json()
         setTasks(data)
+
+        console.log(data)
     }
 
     const submitTask = async () => {
@@ -37,9 +39,19 @@ function Tasks(){
         fetchTasks();
     }
 
-    useEffect(() => {
-        fetchTasks()
-    }, [])
+    const fetchAllTasks = async () => {
+
+        try{
+
+            const res = await fetch("http://localhost:5000/tasks")
+            const data = await res.json();
+            setTasks(data);
+
+        }catch(err){
+            console.log(err)
+        }
+
+    }
 
     return(
         <div className="taskBoard">
@@ -81,7 +93,7 @@ function Tasks(){
                 </div>
             )}
 
-            {tasks.map( task => {
+            {tasks.map(task => (
                 <div className="Cards" key={task.id}>
 
                     <h3>{task.title}</h3>
@@ -113,11 +125,18 @@ function Tasks(){
                     
                 
                 </div>
-            })
+            ))
 
             }
 
+            <button onClick={fetchTasks}>
+              Show Tasks
+            </button>
+
+            //Demo data of how the tasks should look like
+
             <div className="Cards">
+                
                <h3>Name of the Task</h3>
                <p> Time for the Task</p>
                <p>Starting: at the certain time </p>
@@ -126,6 +145,7 @@ function Tasks(){
             </div>  
 
             <div className="Cards">
+                <p>DEMO</p>
                <h3>Name of the Task</h3>
                <p> Time for the Task</p>
                <p>Starting: at the certain time </p>
