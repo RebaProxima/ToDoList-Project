@@ -30,10 +30,12 @@ function Tasks(){
             body: JSON.stringify({ 
                 title,
                 description,
-                startTime,
-                endTime
+                start_time: startTime,
+                end_time: endTime
             })
         })
+
+        console.log(title, description, startTime, endTime)
 
         setShowForm(false);
         fetchTasks();
@@ -129,11 +131,13 @@ function Tasks(){
 
             }
 
-            <button onClick={fetchTasks}>
+            <button onClick={fetchAllTasks}>
               Show Tasks
             </button>
 
-            //Demo data of how the tasks should look like
+            {/*
+
+            Demo data of how the tasks should look like
 
             <div className="Cards">
                 
@@ -151,7 +155,9 @@ function Tasks(){
                <p>Starting: at the certain time </p>
                <p>Completed: Certain time </p>
                <p> Task Description </p>
-            </div>          
+            </div>
+            
+            */}
     
         </div>
     )

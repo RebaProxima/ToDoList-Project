@@ -37,20 +37,16 @@ function Dashboard() {
 
     const today = new Date()
 
-    const overdueTasks = tasks.filter(task => {
-      
-
-      return new Date(task.start_time) < today
-    })
+    const overdueTasks = tasks.filter(task => task.start_time && new Date(task.start_time) < today)
 
     const todayTasks = tasks.filter(task => {
       if(!task.start_time){
         return false
       }
 
-      const taskDate = new Date(task.start_time)
+      const start= new Date(task.start_time)
 
-      return taskDate.toDateString() === today.toDateString()
+      return start.toDateString() === today.toDateString()
 
     })
 
@@ -59,13 +55,23 @@ function Dashboard() {
         return false
       }
 
-      const taskDate = new Date(task.start_time)
+      const start = new Date(task.start_time)
 
       const tomorrow = new Date()
       tomorrow.setDate(today.getDate() + 1)
 
-      return taskDate.toDateString() === tomorrow.toDateString()
+      return start.toDateString() === tomorrow.toDateString()
     })
+
+    const sortByStartTime = (arr) => {
+          return arr.sort((a, b) => {
+            return new Date(a.start_time) - new Date(b.start_time)
+          })
+    }
+    
+    const overdueSorted = sortByStartTime(overdueTasks)
+    const todaySorted = sortByStartTime(todayTasks)
+    const tomorrowSorted = sortByStartTime(tomorrowTasks)
 
     return (
       <div className="dashboard">
@@ -73,7 +79,7 @@ function Dashboard() {
       {/* Top Header */}
       <header className="topbar">
         <div className="logo">MyApp</div>
-        <div className="user">Reba</div>
+        
       </header>
 
       {/* Main Area */}
@@ -114,7 +120,6 @@ function Dashboard() {
               <>
               <div className="profile-top">
               <div>
-                <h1>Reba</h1>
                 <h2>Goals</h2>
                 <p>Add goals here, it can be few and then you can click more to view more</p>
                 <p>Currenly focusing on Reaact</p>
@@ -146,7 +151,7 @@ function Dashboard() {
               <div className="task-card overdue">
                 <h3>Overdue</h3>
                 <ul>
-                  {overdueTasks.slice(0,3).map(task => (
+                  {overdueSorted.slice(0,3).map(task => (
                     <li key={task.id}>
                       {task.title}
                     </li>
@@ -157,7 +162,7 @@ function Dashboard() {
               <div className="task-card today">
                 <h3>Today</h3>
                 <ul>
-                  {todayTasks.slice(0,3).map(task => (
+                  {todaySorted.slice(0,3).map(task => (
                     <li key={task.id}>
                       {task.title}
                     </li>
@@ -171,6 +176,9 @@ function Dashboard() {
               <div className="task-card">
                 <h3>Tomorrow</h3>
                 <ul>
+                  {tomorrowSorted.slice(0, 3).map(task =>(
+                    <li key={task.id}>{task.title}</li>
+                  ))}
                   <li>Task 5</li>
                   <li>Task 6</li>
                 </ul>
