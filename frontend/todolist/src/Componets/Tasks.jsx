@@ -55,6 +55,42 @@ function Tasks(){
 
     }
 
+    const deleteTask = async (id) => {
+        
+        await fetch('http://localhost:5000/tasks/${id}', {
+            method: "DELETE"
+        })
+        fetchTasks()
+    }
+
+    const completeTask = async (id) => {
+        await fetch(`http://localhost:5000/tasks/${id}/complete`,{
+            method: "PUT"
+        })
+
+        fetchTasks()
+    }
+
+    const editTask = async (tasks) =>{
+        const newTitle = prompt("New Title", task.title)
+        const newDescription = prompt("New Description", task.description)
+
+        if(!newTitle) return
+
+        await fetch(`http://localhost:5000/tasks/${task.id}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+            title: newTitle,
+            description: newDescription
+            })
+        })
+
+    fetchTasks()
+    }
+
     return(
         <div className="taskBoard">
 
@@ -133,6 +169,18 @@ function Tasks(){
 
             <button onClick={fetchAllTasks}>
               Show Tasks
+            </button>
+
+            <button onClick={() => deleteTask(task.id)}>
+              Delete
+            </button>
+
+            <button onClick={() => completeTask(task.id)}>
+              Complete
+            </button>
+
+            <button onClick={() => deleteTask(task.id)}>
+              Delete
             </button>
 
             {/*

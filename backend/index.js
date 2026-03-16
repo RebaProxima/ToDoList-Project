@@ -102,6 +102,62 @@ app.get("/tasks/recents" , (req, res) => {
     })
 })
 
+{/* For marking task complete */}
+app.put("/tasks/:id/complete", (req, res) =>{
+
+    const { id } = req.params
+
+    const sql = "UPDATE tasks SET completed = TRUE WHERE id ?"
+
+    pool.query(sql, [id], (err) => {
+
+        if(err){
+            console.error(err)
+            return res.status(500).send("Eror for updating the task")
+        }
+
+        res.send("Task Complete")
+    })
+
+})
+
+{/* To Delete tasks */}
+app.delete("/tasks/:id" , (req, res) => {
+    const { id } = req.params
+
+    const sql = "DELETE FROM tasks WEHRE id = ?"
+
+    pool.query(sql, [id], err => {
+        if(err){
+            console.error(err)
+            return res.status(500).send("Error deleting")
+        }
+        res.send("Task deleted")
+    })
+})
+
+{/* To edit task */}
+app.put("/taks/:id", (req, res) => {
+    
+    const { id } = req.params
+    const {title, description} = req.body
+
+    const sql = `
+       UPDATE tasks
+       SET title = ?, description = ?
+       WHERE id = ?
+    `
+
+    pool.query(sql, [title, description, id], (err) => {
+        if(err){
+            console.error(err)
+            return res.status(500).send("Error updating task")
+        }
+
+        res.send("Task upodated")
+    })
+})
+
 app.listen(5000,() => {
-    console.log("Server is listening to the port");
+    console.log("Server is listening to the port")
 })
