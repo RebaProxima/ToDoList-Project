@@ -6,18 +6,32 @@ function Tasks(){
     const [tasks, setTasks] = useState([])
     const [showForm, setShowForm] = useState(false)
     const [newTask, setNewTask] = useState("")
-
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [startTime, setStrtTime] = useState("")
     const [endTime, setEndTime] = useState("")
+    const [showTasks, setShowTasks] = useState(false)
 
     const fetchTasks = async () => {
-        const res = await fetch("http://localhost:5000/tasks")
-        const data = await res.json()
-        setTasks(data)
 
-        console.log(data)
+        try{
+            const res = await fetch("http://localhost:5000/tasks")
+            const data = await res.json()
+            const now = new Date()
+
+            const updatedTasks = data.map(task => {
+                if(!task.completed && task.end_time && new Date(task.end_Time) < now){
+                    task.completed = true
+                }
+                return task
+            })
+
+            setTasks(updatedTasks)
+            console.log(updatedTasks)
+        } catch(err){
+            console.log(err)
+        }
+        
     }
 
     const submitTask = async () => {
@@ -41,23 +55,10 @@ function Tasks(){
         fetchTasks();
     }
 
-    const fetchAllTasks = async () => {
-
-        try{
-
-            const res = await fetch("http://localhost:5000/tasks")
-            const data = await res.json();
-            setTasks(data);
-
-        }catch(err){
-            console.log(err)
-        }
-
-    }
 
     const deleteTask = async (id) => {
         
-        await fetch('http://localhost:5000/tasks/${id}', {
+        await fetch(`http://localhost:5000/tasks/${id}`, {
             method: "DELETE"
         })
         fetchTasks()
@@ -71,9 +72,12 @@ function Tasks(){
         fetchTasks()
     }
 
-    const editTask = async (tasks) =>{
+    const editTask = async (task) =>{
         const newTitle = prompt("New Title", task.title)
         const newDescription = prompt("New Description", task.description)
+        const newStart = prompt("New Start Time", task.start_time)
+        const newEnd = prompt("New End Time", task.end_time)
+
 
         if(!newTitle) return
 
@@ -84,7 +88,9 @@ function Tasks(){
             },
             body: JSON.stringify({
             title: newTitle,
-            description: newDescription
+            description: newDescription,
+            start_time: newStart,
+            end_time: newEnd
             })
         })
 
@@ -95,8 +101,8 @@ function Tasks(){
         <div className="taskBoard">
 
             <h2>Tasks Menu</h2>
-            <button onClick={() => setShowForm(true)}>
-                Add Task
+            <button onClick={() => setShowForm(!showForm)}>
+                {showForm ? "Close" : "Add Task"}
             </button>
             
             {showForm && (
@@ -131,7 +137,9 @@ function Tasks(){
                 </div>
             )}
 
-            {tasks.map(task => (
+            {tasks
+            .filter(task => !task.completed)
+            .map(task => (
                 <div className="Cards" key={task.id}>
 
                     <h3>{task.title}</h3>
@@ -160,29 +168,35 @@ function Tasks(){
                         {task.completed ? "✅" : "❌"}
                     </p>
 
-                    
+                    <button onClick={() => deleteTask(task.id)}>
+                      Delete
+                     </button>
+
+                    <button onClick={() => completeTask(task.id)}>
+                      {task.completed ? "☑ Completed" : "⬜ Complete"}
+                    </button>
+
+                    <button onClick={() => editTask(task)}>
+                     Edit
+                    </button>
                 
                 </div>
             ))
 
             }
 
-            <button onClick={fetchAllTasks}>
-              Show Tasks
-            </button>
+            <button onClick={() => {
+                if(showTasks){
+                    setTasks([])
+                    setShowTasks(false)
+                }else{
+                    fetchTasks()
+                    setShowForm(true)
+                }
 
-            <button onClick={() => deleteTask(task.id)}>
-              Delete
+            }}>
+                {showTasks ? "Hide Tasks" : "Show TAsks"}
             </button>
-
-            <button onClick={() => completeTask(task.id)}>
-              Complete
-            </button>
-
-            <button onClick={() => deleteTask(task.id)}>
-              Delete
-            </button>
-
             {/*
 
             Demo data of how the tasks should look like
